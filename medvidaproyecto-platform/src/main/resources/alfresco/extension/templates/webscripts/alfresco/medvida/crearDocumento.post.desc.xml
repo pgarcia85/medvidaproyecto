@@ -1,0 +1,9 @@
+<webscript>
+    <shortname>Crear Documento</shortname>
+    <description>Crea documentos con contenido</description>
+    <url>/medvida/contracts/create</url>
+    <format default="json">extension</format>
+    <family>Medvida</family>
+    <authentication runas="admin">user</authentication>
+    <transaction>required</transaction>
+</webscript>

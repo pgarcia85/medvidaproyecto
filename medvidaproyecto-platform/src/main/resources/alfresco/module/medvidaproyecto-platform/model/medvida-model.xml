@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model name="mv:medvidamodel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+
+	<!-- Optional meta-data about the model -->
+	<description>Modelo de datos para Expediente de Medvida</description>
+	<author>DXC</author>
+	<version>1.0</version>
+
+	<imports>
+		<!-- Import Alfresco Dictionary Definitions -->
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<!-- Import Alfresco Content Domain Model Definitions -->
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+		<!-- Import Alfresco System Model Definitions -->
+		<import uri="http://www.alfresco.org/model/system/1.0" prefix="sys" />
+	</imports>
+
+	<!-- Custom namespace for the ACME company -->
+	<namespaces>
+		<namespace uri="mv.model" prefix="mv" />
+	</namespaces>
+	
+	<constraints>
+		<constraint name="mv:lopd_level_options" type="LIST">
+            <parameter name="allowedValues">
+                <list>
+                    <value>M</value>
+                    <value>A</value>
+                    <value>O</value>
+                    <value>U</value>
+                </list>
+            </parameter>
+            <parameter name="caseSensitive">
+				<value>true</value>
+			</parameter>
+			<parameter name="sorted">
+				<value>false</value>
+			</parameter>
+        </constraint>
+        
+        <constraint name="mv:insurance_type_options" type="LIST">
+            <parameter name="allowedValues">
+                <list>
+                    <value>Person</value>
+                    <value>Contract</value>
+                </list>
+            </parameter>
+            <parameter name="caseSensitive">
+				<value>true</value>
+			</parameter>
+			<parameter name="sorted">
+				<value>false</value>
+			</parameter>
+        </constraint>
+        
+        <constraint name="mv:coverpage_type_options" type="LIST">
+            <parameter name="allowedValues">
+                <list>
+                    <value>BS</value>
+                    <value>SSCC</value>
+                </list>
+            </parameter>
+            <parameter name="caseSensitive">
+				<value>true</value>
+			</parameter>
+			<parameter name="sorted">
+				<value>false</value>
+			</parameter>
+        </constraint>
+	</constraints>
+	
+	<types>
+	<type name="mv:medvida_doc">
+            <title>Documento Medvida</title>
+            <parent>cm:content</parent>
+            <properties>
+                <property name="mv:lopd_level">
+                    <title>Nivel LOPD</title>
+                    <type>d:text</type>
+                    <mandatory>false</mandatory>
+                    <constraints>
+						<constraint ref="mv:lopd_level_options" />
+					</constraints>
+                </property>
+            </properties>
+      </type>
+      <type name="mv:insurance_doc">
+      	<title>Documento seguro</title>
+      	<parent>mv:medvida_doc</parent>
+      	<properties>
+      		<property name="mv:contract_id">
+      			<title>Identificador contrato</title>
+      			<type>d:text</type>
+      			<mandatory>false</mandatory>
+      		</property>
+      		<property name="mv:contract_id_BS">
+      			<title>Identificador contrato BS</title>
+      			<type>d:text</type>
+      			<mandatory>false</mandatory>
+      		</property>
+      		<property name="mv:person_id">
+      			<title>Identificador persona</title>
+      			<type>d:text</type>
+      			<mandatory>false</mandatory>
+      		</property>
+      		<property name="mv:type">
+      			<title>Tipo</title>
+      			<type>d:text</type>
+      			<mandatory>false</mandatory>
+      			<constraints>
+					<constraint ref="mv:insurance_type_options" />
+				</constraints>
+      		</property>
+      		<property name="mv:typology">
+      			<title>Tipología</title>
+      			<type>d:text</type>
+      			<mandatory>false</mandatory>
+      		</property>
+      		<property name="mv:typology_description">
+      			<title>Descripcion tipología</title>
+      			<type>d:text</type>
+      			<mandatory>false</mandatory>
+      		</property>
+      		<property name="mv:start_date">
+      			<title>Fecha inicio</title>
+      			<type>d:date</type>
+      			<mandatory>false</mandatory>
+      		</property>
+      		<property name="mv:end_date">
+      			<title>Fecha fin</title>
+      			<type>d:date</type>
+      			<mandatory>false</mandatory>
+      		</property>
+      		<property name="mv:update_date">
+      			<title>Fecha actualizacion</title>
+      			<type>d:date</type>
+      			<mandatory>false</mandatory>
+      		</property>
+      		<property name="mv:cod_caja">
+      			<title>Código de caja</title>
+      			<type>d:text</type>
+      			<mandatory>false</mandatory>
+      		</property>
+      		<property name="mv:cod_num_caja">
+      			<title>Número de caja</title>
+      			<type>d:text</type>
+      			<mandatory>false</mandatory>
+      		</property>
+      		<property name="mv:sec_number">
+      			<title>Número de secuencia</title>
+      			<type>d:int</type>
+      			<mandatory>false</mandatory>
+      		</property>
+      		<property name="mv:page_number">
+      			<title>Número de páginas</title>
+      			<type>d:int</type>
+      			<mandatory>false</mandatory>
+      		</property>
+      		<property name="mv:lote_number">
+      			<title>Número de lote</title>
+      			<type>d:int</type>
+      			<mandatory>false</mandatory>
+      		</property>
+      		<property name="mv:fiscal_year">
+      			<title>Año fiscal</title>
+      			<type>d:int</type>
+      			<mandatory>false</mandatory>
+      		</property>
+      		<property name="mv:supplement">
+      			<title>Suplemento</title>
+      			<type>d:text</type>
+      			<mandatory>false</mandatory>
+      		</property>
+      	</properties>
+      </type>
+	
+	</types>
+	
+	<aspects>
+		<aspect name="mv:coverPage">
+			<title>Carátula</title>
+			<properties>
+				<property name="mv:bidi_code">
+	      			<title>Código BIDI</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:type_coverpage">
+	      			<title>Tipo</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      			<constraints>
+						<constraint ref="mv:insurance_type_options" />
+					</constraints>
+      			</property>
+      			<property name="mv:status">
+	      			<title>Estado</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:health_declaration">
+	      			<title>Declaración de salud</title>
+	      			<type>d:boolean</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:commitment_permanence">
+	      			<title>Compromiso de permanencia</title>
+	      			<type>d:boolean</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:special_conditions">
+	      			<title>Condiciones especiales</title>
+	      			<type>d:boolean</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:mandate">
+	      			<title>Mandato</title>
+	      			<type>d:boolean</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:signed">
+	      			<title>Firmado</title>
+	      			<type>d:boolean</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:pending_digitization">
+	      			<title>Digitalización</title>
+	      			<type>d:boolean</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+      		</properties>
+		</aspect>
+		
+		<aspect name="mv:cam_document">
+			<title>Documento de la CAM</title>
+			<properties>
+				<property name="mv:coun_identificativo">
+	      			<title>coun_identificativo</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:coun_dni_usuario">
+	      			<title>coun_dni_usuario</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+      			</property>
+      			<property name="mv:coun_clase_doc">
+	      			<title>coun_clase_doc</title>
+	      			<type>d:int</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:code_desc_clase">
+	      			<title>code_desc_clase</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:coun_tipo_doc">
+	      			<title>coun_tipo_doc</title>
+	      			<type>d:long</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:cofc_documento">
+	      			<title>cofc_documento</title>
+	      			<type>d:date</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:coun_documento">
+	      			<title>coun_documento</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:coun_expediente">
+	      			<title>coun_expediente</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:coun_nro_cuenta">
+	      			<title>Digitalización</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:coin_dni_nif">
+	      			<title>coin_dni_nif</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:code_nombre_cliente">
+	      			<title>code_nombre_cliente</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:coim_importe">
+	      			<title>coim_importe</title>
+	      			<type>d:int</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:code_oficina_usuario">
+	      			<title>code_oficina_usuario</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:coid_indexacion">
+	      			<title>coid_indexacion</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:code_caducidad">
+	      			<title>code_caducidad</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:code_permisos_acceso">
+	      			<title>code_permisos_acceso</title>
+	      			<type>d:int</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:code_cargo_operativo">
+	      			<title>code_cargo_operativo</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:code_jerarquia_1">
+	      			<title>code_jerarquia_1</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:code_jerarquia_2">
+	      			<title>code_jerarquia_2</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:code_jerarquia_3">
+	      			<title>code_jerarquia_3</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:code_jerarquia_4">
+	      			<title>code_jerarquia_4</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:code_jerarquia_5">
+	      			<title>code_jerarquia_5</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:code_unidad_operativa">
+	      			<title>code_unidad_operativa</title>
+	      			<type>d:int</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:cofc_aportacion">
+	      			<title>cofc_aportacion</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:code_regdtupt">
+	      			<title>code_regdtupt</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:code_confirmado">
+	      			<title>code_confirmado</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:code_nro_avisos">
+	      			<title>code_nro_avisos</title>
+	      			<type>d:int</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:code_nro_ged_old">
+	      			<title>code_nro_ged_old</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:code_doc_firmado">
+	      			<title>code_doc_firmado</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+	      		<property name="mv:code_path_documento">
+	      			<title>code_path_documento</title>
+	      			<type>d:text</type>
+	      			<mandatory>false</mandatory>
+	      		</property>
+      		</properties>
+		</aspect>
+	</aspects>
+
+</model>
